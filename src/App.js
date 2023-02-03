@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css"
+import { HeaderGame } from './headerGame';
+import { Instrucciones } from "./instrucciones";
+import { Juego } from "./juego";
 
 function App() {
+
+  const [estasJugando, setJuegoIniciado] = useState(false);
+  const [vida, setVida] = useState(3);
+  const [score, setScore] = useState(0);
+
+
+
+  const cambiarEstadoJuego= (param)=>{
+    setJuegoIniciado(param);
+    setVida(3);
+    setScore(0);
+  }
+
+  const establecerVida = ()=>{
+    setVida(vida-1);
+
+  }
+
+  const establecerScore = ()=>{
+    setScore(score+1);
+
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HeaderGame vidaPar={vida} scorePar={score} juegoTerminado={cambiarEstadoJuego}></HeaderGame>
+      {estasJugando?<Juego establecerVida={establecerVida} establecerScore={establecerScore}></Juego>:<Instrucciones juegando={cambiarEstadoJuego}></Instrucciones>}
     </div>
   );
 }
